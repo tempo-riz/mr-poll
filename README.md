@@ -1,5 +1,5 @@
 # Mr Poll
-Simple Poll clone without the add and premium ads
+Simple Poll clone without the premium/ads part
 
 ## Guide
 https://discordjs.guide/preparations/setting-up-a-bot-application.html#creating-your-bot
