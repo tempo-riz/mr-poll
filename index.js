@@ -43,8 +43,6 @@ client.once(Events.ClientReady, (readyClient) => {
 });
 
 setupCommands(client).then(() => {
-	console.log("Commands are set up!");
 	client.login(process.env.DISCORD_TOKEN);
-
 });
 

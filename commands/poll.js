@@ -18,6 +18,10 @@ export async function execute(interaction) {
     const question = interaction.options.getString('question');
     const options = [];
 
+    const embed = new EmbedBuilder()
+        .setTitle(question)
+        .setColor('#945C8B')
+
     // Extracting options from the interaction
     for (let i = 0; i < letters.length; i++) {
         const option = interaction.options.getString(`choice_${letters[i]}`);
@@ -29,7 +33,7 @@ export async function execute(interaction) {
     // If there are less than 2 options, create a simple poll with thumbs up and thumbs down reactions
     if (options.length < 2) {
         const pollMessage = await interaction.reply({
-            content: `📊 **${question}**`,
+            embeds: [embed],
             fetchReply: true
         });
         await pollMessage.react('👍');
@@ -37,16 +41,9 @@ export async function execute(interaction) {
         return;
     }
 
-    // Creating the poll message with options represented by letter emojis
-    const optionsString = options.map((option, index) => `${emojis[index]} ${option}`).join('\n');
+    const description = options.map((option, index) => `${emojis[index]} ${option}`).join('\n');
 
-    const fields = options.map((option, index) => ({ name: emojis[index], value: option }));
-
-    const embed = new EmbedBuilder()
-        .setColor(Colors.Blurple)
-        .setDescription('React with the corresponding letter to answer !')
-        .setColor('#0099ff')
-        .setFields(fields);
+    embed.setDescription(description)
 
 
     const pollMessage = await interaction.reply({
