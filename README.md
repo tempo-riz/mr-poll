@@ -1,4 +1,4 @@
-# free-simple-poll
+# Mr Poll
 Simple Poll clone without the add and premium ads
 
 ## Guide
