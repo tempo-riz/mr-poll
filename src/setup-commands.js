@@ -6,7 +6,7 @@ import { REST, Routes, Collection } from "discord.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-
+/// update the client and guild commands
 export async function setupCommands(client) {
 
     const jsonCommands = [];
@@ -16,6 +16,7 @@ export async function setupCommands(client) {
 
     const commandsFolderPath = path.join(__dirname, "commands");
 
+    // read all the files in the commands folder to build the commands
     try {
         const commandFiles = fs.readdirSync(commandsFolderPath);
 
@@ -38,26 +39,15 @@ export async function setupCommands(client) {
                 console.error(`Error importing command from ${filePath}:`, error);
             }
         }
-    } catch (error) {
-        console.error("Error reading directory:", error);
-    }
 
-    try {
-        console.log(
-            `Started refreshing ${jsonCommands.length} application (/) commands.`
-        );
-
-        // The put method is used to fully refresh all commands in the guild with the current set
+        // then update the commands
         const data = await rest.put(
             Routes.applicationCommands(process.env.APPLICATION_ID),
             { body: jsonCommands }
         );
 
-        console.log(
-            `Successfully reloaded ${data.length} application (/) commands.`
-        );
+        console.log(`Successfully refreshed ${data.length} application (/) commands.`);
     } catch (error) {
-        // And of course, make sure you catch and log any errors!
         console.error(error);
     }
 }
